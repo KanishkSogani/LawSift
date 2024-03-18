@@ -10,7 +10,7 @@ const footer = asyncHandler(async(req,res)=> {
             {},
             {
                 headers : {
-                    Authorization : "Bearer efa410d0-0db1-454b-b213-d825256cd22c"
+                    Authorization : `Bearer ${process.env.FOOTER_TOKEN}`
                 }
             }
         );
