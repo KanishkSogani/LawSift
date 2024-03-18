@@ -14,7 +14,9 @@ app.use(express.urlencoded({extended : true, limit : "16kb"}))
 app.use(express.static('public'))
 
 //routes
-import analysisRouter from './routes/analysis.routes';
+import analysisRouter from './routes/analysis.routes.js';
+import footerRouter from './routes/footerApi.routes.js';
 app.use('/analysis',analysisRouter)
+app.use('/api', footerRouter)
 
 export {app}
