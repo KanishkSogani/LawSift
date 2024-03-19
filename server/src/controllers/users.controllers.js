@@ -3,6 +3,7 @@ import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asynchandler.js";
+import mongoose from "mongoose";
 
 const generateAccessAndRefreshToken = async(userId) => {
     try {
@@ -175,5 +176,57 @@ const getCurrentUser = asyncHandler(async(req, res) => {
     ))
 })
 
+const getHistory = asyncHandler(async(req, res) => {
+    const user = await User.aggregate([
+        {
+            $match : {
+                id : new mongoose.Types.ObjectId(req.user._id)
+            }
+        },
+        {
+            $lookup : {
+                from : "userdatas",
+                localField: "history",
+                foreignField : "_id",
+                as : "dataHistory",
+                pipeline : [
+                    {
+                        $lookup : {
+                            from: "users",
+                            localField : "owner",
+                            foreignField : "_id",
+                            as : "owner",
+                            pipeline : [
+                                {
+                                    $project : {
+                                        username : 1,
+                                        fullname : 1
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        $addFields : {
+                            owner : {
+                                $first : "$owner"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ])
 
-export {registerUser, loginUser, logoutUser, refreshAccessToken, getCurrentUser}
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            user[0].getHistory,
+            "Data History fetched Successfully"
+        )
+    )
+})
+
+export {registerUser, loginUser, logoutUser, refreshAccessToken, getCurrentUser, getHistory}
