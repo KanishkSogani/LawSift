@@ -11,9 +11,13 @@ function Uploadpdf() {
   const [fileName, setFileName] = useState("No selected file");
   return (
     <>
+      <div style={{ marginTop: ".5rem" }} id="upload">
+        {/* This is an empty div */}
+      </div>
+      <br />
       <div
         style={{
-          marginTop: "2rem",
+          marginTop: "1rem",
           marginLeft: "8vw",
           marginRight: "8vw",
           display: "flex",

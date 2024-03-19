@@ -25,11 +25,23 @@ function Navbar() {
         <Link className="navlink" to={"/"}>
           Home
         </Link>
-        <Link className="navlink" to={"/about"}>
-          About
+        <Link
+          className="navlink"
+          onClick={() => {
+            const element = document.getElementById("features");
+            element.scrollIntoView({ behavior: "smooth" });
+          }}
+        >
+          Features
         </Link>
-        <Link className="navlink" to={"/contact"}>
-          Disclaimer
+        <Link
+          className="navlink"
+          onClick={() => {
+            const element = document.getElementById("about");
+            element.scrollIntoView({ behavior: "smooth" });
+          }}
+        >
+          About Us
         </Link>
       </div>
       <div style={{ marginLeft: "19vw" }}>

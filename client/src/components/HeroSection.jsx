@@ -1,11 +1,8 @@
 import { ReactTyped } from "react-typed";
-import { useNavigate } from "react-router-dom";
 import lineAnimation from "../assets/lineAnimation.json";
 import Lottie from "lottie-react";
 
-function LandingPage() {
-  const navigate = useNavigate();
-
+function HeroSection() {
   return (
     <>
       <div
@@ -44,7 +41,8 @@ function LandingPage() {
           <div>
             <button
               onClick={() => {
-                navigate("/upload");
+                const element = document.getElementById("upload");
+                element.scrollIntoView({ behavior: "smooth" });
               }}
               className="btn"
               style={{ marginTop: "2.5rem" }}
@@ -66,4 +64,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default HeroSection;
