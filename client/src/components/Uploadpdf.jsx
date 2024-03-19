@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Uploadpdf({ setData }) {
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
 
   // Function to handle file selection
@@ -20,6 +21,7 @@ function Uploadpdf({ setData }) {
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    navigate("/Dashboard");
 
     if (!selectedFile) {
       return alert("Please select a PDF file");
@@ -44,7 +46,7 @@ function Uploadpdf({ setData }) {
       console.error("Error uploading file:", error.response.data);
     }
   };
-  const navigate = useNavigate();
+
   const [fileName, setFileName] = useState("No selected file");
   return (
     <>
@@ -185,11 +187,9 @@ function Uploadpdf({ setData }) {
                       left: "9rem",
                     }}
                     variant="contained"
-                    onClick={() => {
-                      !selectedFile
-                        ? alert("Please select a file!")
-                        : navigate("/Dashboard");
-                    }}
+                    // onClick={() => {
+                    // //   navigate("/Dashboard");
+                    // }}
                     // onClick={() => {
                     //   handleSubmit();
                     // }}
