@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { AiFillFileImage } from "react-icons/ai";
 import { Card, Button } from "@mui/material";
@@ -8,29 +9,42 @@ import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Uploadpdf({ image, setImage }) {
-  const [pdf, setPdf] = useState(null);
+function Uploadpdf() {
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  async function uploadPDF(pdfFile) {
+  // Function to handle file selection
+  const handleFileInputChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+    setFileName(event.target.files[0].name);
+  };
+
+  // Function to handle form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!selectedFile) {
+      return alert("Please select a PDF file");
+    }
+
     const formData = new FormData();
-    formData.append("pdfFile", pdfFile);
+    formData.append("pdf", selectedFile);
 
-    const response = axios
-      .post("http://localhost:3000/analysis/summary", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        // Handle response from the server
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // Handle errors
-        console.error("Error:", error);
-      });
-  }
-  const navigate = useNavigate();
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/analysis/summary",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("File uploaded successfully:", response.data);
+    } catch (error) {
+      console.error("Error uploading file:", error.response.data);
+    }
+  };
+  //   const navigate = useNavigate();
   const [fileName, setFileName] = useState("No selected file");
   return (
     <>
@@ -117,7 +131,13 @@ function Uploadpdf({ image, setImage }) {
               </div>
               <div>
                 <form
-                  onClick={() => document.querySelector(".input-field").click()}
+                  onSubmit={handleSubmit}
+                  onClick={(event) => {
+                    // Check if the event target is not the button
+                    if (!event.target.closest("button")) {
+                      document.querySelector(".input-field").click();
+                    }
+                  }}
                 >
                   <input
                     type="file"
@@ -126,14 +146,15 @@ function Uploadpdf({ image, setImage }) {
                     required={true}
                     style={{ backgroundColor: "white" }}
                     hidden
-                    onChange={(e) => {
-                      setFileName(e.target.files[0].name);
-                      setImage(e.target.files[0]);
-                      setPdf(e.target.files[0]);
-                    }}
+                    // onChange={(e) => {
+                    //   setFileName(e.target.files[0].name);
+                    //   setImage(e.target.files[0]);
+                    //   setPdf(e.target.files[0]);
+                    // }}
+                    onChange={handleFileInputChange}
                   />
 
-                  {image ? (
+                  {selectedFile ? (
                     <div
                       style={{
                         display: "flex",
@@ -155,6 +176,26 @@ function Uploadpdf({ image, setImage }) {
                       </p>
                     </>
                   )}
+                  <Button
+                    type="submit"
+                    style={{
+                      marginTop: "1rem",
+                      position: "relative",
+                      top: "9.8rem",
+                      left: "9.2rem",
+                    }}
+                    variant="contained"
+                    // onClick={() => {
+                    //   !image
+                    //     ? alert("Please select a file!")
+                    //     : navigate("/Dashboard");
+                    // }}
+                    // onClick={() => {
+                    //   handleSubmit();
+                    // }}
+                  >
+                    Submit Pdf
+                  </Button>
                 </form>
 
                 <section className="uploaded-row">
@@ -166,13 +207,14 @@ function Uploadpdf({ image, setImage }) {
                       style={{ fontSize: 20, cursor: "pointer" }}
                       onClick={() => {
                         setFileName("No selected File");
-                        setImage(null);
+                        setSelectedFile(null);
                       }}
                     />
                   </span>
                 </section>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button
+                  {/* <Button
+                    type="submit"
                     style={{ marginTop: "1rem" }}
                     variant="contained"
                     // onClick={() => {
@@ -180,12 +222,12 @@ function Uploadpdf({ image, setImage }) {
                     //     ? alert("Please select a file!")
                     //     : navigate("/Dashboard");
                     // }}
-                    onClick={() => {
-                      uploadPDF(pdf);
-                    }}
+                    // onClick={() => {
+                    //   handleSubmit();
+                    // }}
                   >
                     Submit Pdf
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </Card>
