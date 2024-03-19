@@ -6,7 +6,7 @@ function Dashboard(image, setImage) {
   useEffect(() => {
     async function fetchApi() {
       const formData = new FormData();
-      formData.append("pdfFile", image);
+      formData.append("pdf", image);
       try {
         const response = await axios.post(
           "http://localhost:3000/analysis/summary",
