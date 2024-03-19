@@ -5,8 +5,10 @@ import { Card, Button } from "@mui/material";
 import uploadAnimation from "../assets/uploadAnimation.json";
 import lineAnimation from "../assets/lineAnimation.json";
 import Lottie from "lottie-react";
+import { useNavigate } from "react-router-dom";
 
 function Uploadpdf() {
+  const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [fileName, setFileName] = useState("No selected file");
   return (
@@ -100,6 +102,7 @@ function Uploadpdf() {
                     type="file"
                     accept="pdf"
                     className="input-field"
+                    required={true}
                     style={{ backgroundColor: "white" }}
                     hidden
                     onChange={({ target: { files } }) => {
@@ -149,7 +152,15 @@ function Uploadpdf() {
                   </span>
                 </section>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button style={{ marginTop: "1rem" }} variant="contained">
+                  <Button
+                    style={{ marginTop: "1rem" }}
+                    variant="contained"
+                    onClick={() => {
+                      !image
+                        ? alert("Please select a file!")
+                        : navigate("/Dashboard");
+                    }}
+                  >
                     Submit Pdf
                   </Button>
                 </div>
