@@ -1,26 +1,28 @@
-// import mongoose, { Aggregate, Schema } from "mongoose";
-// import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2"
+import mongoose, { Aggregate, Schema } from "mongoose";
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
-// const userDataSchema = new Schema({
-//     summary : {
-//         type: String
-//     },
-//     strength : {
-//         type : String
-//     },
-//     weakness : {
-//         type : String
-//     },
-//     percent : {
-//         type :String
-//     },
-//     owner : {
-//         type: Schema.Types.ObjectId,
-//         ref: "User"
-//     }
+const userDataSchema = new Schema(
+  {
+    summary: {
+      type: String,
+    },
+    strength: {
+      type: String,
+    },
+    weakness: {
+      type: String,
+    },
+    percent: {
+      type: String,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  },
+  { timestamps: true }
+);
 
-// },{timestamps: true})
+userDataSchema.plugin(mongooseAggregatePaginate);
 
-// userDataSchema.plugin(mongooseAggregatePaginate)
-
-// export const UserData = mongoose.model('UserData', userDataSchema, 'userdatas')
+export const UserData = mongoose.model("UserData", userDataSchema, "userdatas");
