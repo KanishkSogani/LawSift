@@ -9,7 +9,7 @@ import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Uploadpdf() {
+function Uploadpdf({ setData }) {
   const [selectedFile, setSelectedFile] = useState(null);
 
   // Function to handle file selection
@@ -21,6 +21,7 @@ function Uploadpdf() {
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    navigate("/Dashboard");
 
     if (!selectedFile) {
       return alert("Please select a PDF file");
@@ -40,11 +41,12 @@ function Uploadpdf() {
         }
       );
       console.log("File uploaded successfully:", response.data);
+      setData(response.data.data);
     } catch (error) {
       console.error("Error uploading file:", error.response.data);
     }
   };
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [fileName, setFileName] = useState("No selected file");
   return (
     <>
@@ -182,11 +184,11 @@ function Uploadpdf() {
                       marginTop: "1rem",
                       position: "relative",
                       top: "9.8rem",
-                      left: "9.2rem",
+                      left: "9rem",
                     }}
                     variant="contained"
                     // onClick={() => {
-                    //   !image
+                    //   !selectedFile
                     //     ? alert("Please select a file!")
                     //     : navigate("/Dashboard");
                     // }}

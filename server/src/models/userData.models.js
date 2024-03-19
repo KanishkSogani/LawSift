@@ -1,7 +1,6 @@
 import mongoose, { Aggregate, Schema } from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2"
 
-
 const userDataSchema = new Schema({
     summary : {
         type: String
@@ -14,12 +13,12 @@ const userDataSchema = new Schema({
     },
     percent : {
         type :String
-    }, 
+    },
     owner : {
         type: Schema.Types.ObjectId,
         ref: "User"
     }
-    
+
 },{timestamps: true})
 
 userDataSchema.plugin(mongooseAggregatePaginate)

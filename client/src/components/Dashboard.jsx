@@ -1,81 +1,96 @@
 import { Card } from "@mui/material";
-import { useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import { Chart as ChartJS } from "chart.js/auto";
+import { Doughnut } from "react-chartjs-2";
 
-function Dashboard(image, setImage) {
+function Dashboard({ data }) {
+  const [summary, setSummary] = useState([]);
+  const [strpr, setStrpr] = useState();
+  const [weakpr, setWeakpr] = useState();
   useEffect(() => {
-    async function fetchApi() {
-      const formData = new FormData();
-      formData.append("pdfFile", image);
-      try {
-        const response = await axios.post(
-          "http://localhost:3000/analysis/summary",
-          image,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+    if (data.length > 0) {
+      setSummary(data[0].summary);
+      setStrpr(data[3].Strength_Percentage);
+      setWeakpr(data[4].weakness_percentage);
     }
-    fetchApi();
-  }, []);
+  }, [data]);
   return (
     <>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "6rem",
+          marginLeft: "8vw",
+          marginTop: "9rem",
           color: "white",
         }}
       >
-        <h1>Dashboard</h1>
+        <h1 style={{ fontFamily: "Plus Jakarta Sans" }}>Summary</h1>
       </div>
-      <div style={{ marginLeft: "8vw", marginTop: "6rem" }}>
-        <Card
-          style={{
-            margin: 0,
-            width: 500,
-            minHeight: 400,
-            maxHeight: 400,
-            padding: 20,
-            backgroundColor: " #F7F9FE",
-            overflowY: "auto",
-            className: "style-2",
-          }}
-        >
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus
-          eligendi quo fugit deserunt a aperiam, suscipit optio officia
-          recusandae perspiciatis ut incidunt possimus rem dolore? Sapiente,
-          consectetur eum. Magni repudiandae voluptas quam qui nihil ipsa nobis
-          possimus eius molestiae quis numquam hic repellat dolorem nisi, ipsam
-          iusto ratione consequuntur dolore ea? Mollitia nam tempore minus est
-          aut magnam quae laudantium repellendus, nobis voluptatibus ratione
-          fugiat quam quas perferendis facilis? Dignissimos accusantium quisquam
-          nihil ipsam! Cum totam ipsum autem non animi sunt tempore error culpa
-          nam, at illum hic obcaecati nulla rerum quae excepturi. In animi
-          veniam maxime excepturi enim dolore accusamus, incidunt rerum tenetur
-          vero veritatis, dolores natus officiis rem deserunt ut ratione. Earum
-          hic tenetur eos pariatur blanditiis excepturi nam nostrum, eveniet
-          possimus nobis harum officiis consequatur ipsum! Ipsa voluptatem
-          quaerat sint commodi enim dolorum pariatur consequatur placeat
-          reiciendis. Similique dolor fugit fuga, tempore quasi cum deserunt
-          quisquam, praesentium facere maxime debitis consequatur libero
-          reprehenderit excepturi blanditiis eveniet velit at aperiam eligendi
-          enim quos ducimus! Unde sunt fugit fuga aliquam soluta vel quos.
-          Cupiditate doloribus dolorum itaque alias laboriosam neque, possimus
-          error recusandae inventore. Nam, assumenda, porro exercitationem
-          architecto recusandae illum totam optio quaerat placeat nulla,
-          possimus quae. Totam.
-        </Card>
+      <div
+        style={{
+          marginLeft: "8vw",
+          marginTop: "1.5rem",
+          marginRight: "8vw",
+          display: "flex",
+        }}
+      >
+        <div>
+          <Card
+            style={{
+              margin: 0,
+              width: "60vw",
+              minHeight: "60vh",
+              maxHeight: "60vh",
+              padding: 20,
+              backgroundColor: " #F7F9FE",
+              overflowY: "auto",
+              className: "style-2",
+              border: "2px solid #6E58F2",
+              marginRight: "2vw",
+              color: "black",
+              fontSize: "20px",
+            }}
+          >
+            {summary.map((item) => (
+              <p>{item}</p>
+            ))}
+          </Card>
+        </div>
+        <div>
+          <Card
+            className="feature-card"
+            variant="outlined"
+            style={{
+              backgroundColor: "#171C31",
+              width: "25vw",
+              height: "50vh",
+              padding: 20,
+              color: "white",
+              borderRadius: 20,
+              border: "2px solid #6E58F2",
+              marginTop: "10vh",
+            }}
+          >
+            <Doughnut
+              data={{
+                labels: ["Strength", "Weakness"],
+                datasets: [
+                  {
+                    data: [strpr, weakpr],
+                    backgroundColor: [
+                      "rgb(255, 99, 132)",
+                      "rgb(54, 162, 235)",
+                      "rgb(255, 205, 86)",
+                    ],
+                    hoverOffset: 4,
+                  },
+                ],
+              }}
+            />
+          </Card>
+        </div>
       </div>
     </>
   );
 }
 
-export default Dashboard;
+export default Dashboard;

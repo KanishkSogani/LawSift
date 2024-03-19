@@ -4,12 +4,12 @@ import Uploadpdf from "./Uploadpdf";
 import About from "./About";
 import Footer from "./Footer";
 
-function LandingPage({ image, setImage }) {
+function LandingPage({ setData }) {
   return (
     <>
       <HeroSection />
       <Features />
-      <Uploadpdf image={image} setImage={setImage} />
+      <Uploadpdf setData={setData} />
       <About />
       <Footer />
     </>
