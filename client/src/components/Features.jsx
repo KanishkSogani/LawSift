@@ -108,17 +108,17 @@ function Features() {
               display: "flex",
               justifyContent: "center",
               position: "relative",
-              bottom: "3rem",
+              bottom: "2.8rem",
               flexDirection: "column",
             }}
           >
             <h3 style={{ textAlign: "center" }}>Document Summarization</h3>
             <p style={{ textAlign: "center", marginTop: "1rem" }}>
-              Harness the capabilities of our cutting-edge AI technology, which
-              thoroughly analyzes contracts and legal documents to uncover
-              potential risks and pitfalls with exceptional precision. By
-              leveraging this advanced tool, you can gain invaluable insights
-              into any potential issues before making critical decisions,
+              Utilize our LDRM (Legal Document Review Model) to streamline
+              complex legal documents into concise one-page summaries
+              effortlessly. This innovative technology provides swift overviews
+              in straightforward formats, allowing you to grasp crucial
+              information without extensive reading.
             </p>
           </div>
         </Card>
