@@ -6,10 +6,31 @@ import uploadAnimation from "../assets/uploadAnimation.json";
 import lineAnimation from "../assets/lineAnimation.json";
 import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function Uploadpdf() {
+function Uploadpdf({ image, setImage }) {
+  const [pdf, setPdf] = useState(null);
+
+  async function uploadPDF(pdfFile) {
+    const formData = new FormData();
+    formData.append("pdfFile", pdfFile);
+
+    const response = axios
+      .post("http://localhost:3000/analysis/summary", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        // Handle response from the server
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error("Error:", error);
+      });
+  }
   const navigate = useNavigate();
-  const [image, setImage] = useState(null);
   const [fileName, setFileName] = useState("No selected file");
   return (
     <>
@@ -100,16 +121,15 @@ function Uploadpdf() {
                 >
                   <input
                     type="file"
-                    accept="pdf"
+                    accept=".pdf"
                     className="input-field"
                     required={true}
                     style={{ backgroundColor: "white" }}
                     hidden
-                    onChange={({ target: { files } }) => {
-                      files[0] && setFileName(files[0].name);
-                      if (files) {
-                        setImage(URL.createObjectURL(files[0]));
-                      }
+                    onChange={(e) => {
+                      setFileName(e.target.files[0].name);
+                      setImage(e.target.files[0]);
+                      setPdf(e.target.files[0]);
                     }}
                   />
 
@@ -155,10 +175,13 @@ function Uploadpdf() {
                   <Button
                     style={{ marginTop: "1rem" }}
                     variant="contained"
+                    // onClick={() => {
+                    //   !image
+                    //     ? alert("Please select a file!")
+                    //     : navigate("/Dashboard");
+                    // }}
                     onClick={() => {
-                      !image
-                        ? alert("Please select a file!")
-                        : navigate("/Dashboard");
+                      uploadPDF(pdf);
                     }}
                   >
                     Submit Pdf
