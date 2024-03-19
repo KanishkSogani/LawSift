@@ -175,7 +175,7 @@ function Dashboard({ data }) {
             </h2>
             <ul>
               {con.map((item) => (
-                <li>item</li>
+                <li>{item}</li>
               ))}
             </ul>
           </Card>
