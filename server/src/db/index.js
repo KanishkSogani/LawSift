@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import mongoose from "mongoose";
-=======
 import mongoose from 'mongoose'
->>>>>>> 3272427ebe3c0774b6dfc054fc77798bd8f8ec42
 // import { DB_Name } from '../constants.js'
 
 const connectDB = async () => {
@@ -20,8 +16,5 @@ const connectDB = async () => {
   }
 };
 
-<<<<<<< HEAD
 export default connectDB;
-=======
-export default connectDB
->>>>>>> 3272427ebe3c0774b6dfc054fc77798bd8f8ec42
+
