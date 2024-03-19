@@ -22,21 +22,22 @@ const generateAccessAndRefreshToken = async(userId) => {
 }
 
 const registerUser = asyncHandler(async(req,res) => {
+    console.log(req)
     const {email, username, password, fullname} = req.body
     if([username, email, password, fullname].some((field)=>field?.trim() === "")) {
         throw new ApiError(400, 'All fields are required')
     }
-    const exisitingUser = User.findOne({
+    const exisitingUser = await User.findOne({
         $or : [{username}, {email}]
     })
     if(exisitingUser) {
         throw new ApiError(409, "User with username or email already exists")
     }
-    const user = User.create ({
-        username : username.toLowerCase(),
+    const user = await User.create ({
         email,
         fullname,
-        password
+        password,
+        username
     })
     const createdUser = await User.findById(user._id).select(
         "-password -refreshToken"
