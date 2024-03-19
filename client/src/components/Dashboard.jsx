@@ -139,9 +139,9 @@ function Dashboard({ data }) {
             >
               PROS:
             </h2>
-            <ul>
+            <ul style={{ listStyleType : "disc"}}>
               {pro.map((item) => (
-                <li>item</li>
+                <li>{`\u2022 ${item}`}</li>
               ))}
             </ul>
           </Card>
@@ -173,9 +173,9 @@ function Dashboard({ data }) {
             >
               CONS:
             </h2>
-            <ul>
+            <ul style={{listStyleType : 'disc'}}>
               {con.map((item) => (
-                <li>{item}</li>
+                <li>{`\u2022 ${item}`}</li>
               ))}
             </ul>
           </Card>
