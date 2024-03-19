@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { AiFillFileImage } from "react-icons/ai";
 import { Card, Button } from "@mui/material";
@@ -20,6 +21,7 @@ function Uploadpdf({ setData }) {
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    navigate("/Dashboard");
 
     if (!selectedFile) {
       return alert("Please select a PDF file");
@@ -185,11 +187,11 @@ function Uploadpdf({ setData }) {
                       left: "9rem",
                     }}
                     variant="contained"
-                    onClick={() => {
-                      !selectedFile
-                        ? alert("Please select a file!")
-                        : navigate("/Dashboard");
-                    }}
+                    // onClick={() => {
+                    //   !selectedFile
+                    //     ? alert("Please select a file!")
+                    //     : navigate("/Dashboard");
+                    // }}
                     // onClick={() => {
                     //   handleSubmit();
                     // }}

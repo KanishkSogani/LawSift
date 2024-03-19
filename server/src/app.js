@@ -4,22 +4,6 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-<<<<<<< HEAD
-app.use(cors());
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.use(cookieParser());
-
-//routes
-import analysisRouter from "./routes/analysis.routes.js";
-import footerRouter from "./routes/footerApi.routes.js";
-// import userRouter from "./routes/user.routes.js";
-app.use("/analysis", analysisRouter);
-app.use("/api", footerRouter);
-// app.use("/user", userRouter);
-=======
 app.use(cors())
 
 app.use(express.json())
@@ -34,6 +18,5 @@ import userRouter from './routes/user.routes.js';
 app.use('/analysis',analysisRouter)
 app.use('/api', footerRouter)
 app.use('/user', userRouter)
->>>>>>> 1535af5b7aed5d7243ee6f63b12fedeb25aeb7ad
 
 export { app };

@@ -42,19 +42,24 @@ app = Flask(__name__)
 
 
 
-def find_interest_rate(str): #returns the invoice interest rate
-  index = str.find("at the rate of ")
-  slen = len("at the rate of ")
-  invoice_interest_str = str[index + slen : index + slen + 2]
-  #Invoice_interest = (invoice_interest_str.replace(",", ""))
-  #Invoice = int(Invoice_interest.replace(" ",""))
-  return invoice_interest_str 
+# def find_interest_rate(str): #returns the invoice interest rate
+#   index = str.find("at the rate of ")
+#   slen = len("at the rate of ")
+#   invoice_interest_str = str[index + slen : index + slen + 2]
+#   #Invoice_interest = (invoice_interest_str.replace(",", ""))
+#   #Invoice = int(Invoice_interest.replace(" ",""))
+#   return invoice_interest_str 
 
-def invoice_interest_sw(rate): # classifies the interest rate into strength/weakness
-  if int(rate) <= 24:
-    return{"Strength" :  "as interest rate is equal or below 24% : (" + rate + ')'}
-  else:
-    return{"Weakness" : "as interest rate is above 24% : (" + rate + ')'}
+# #def invoice_interest_sw(rate): # classifies the interest rate into strength/weakness
+#   if int(rate) <= 24:
+#     return{"Strength" :  "as interest rate is equal or below 24% : (" + rate + ')'}
+#   else:
+#     return{"Weakness" : "as interest rate is above 24% : (" + rate + ')'}
+
+
+
+
+
 def Find_Initial_Fee(str): # return the initial franchise fee 
   #input_str = extract_text(str)
   index = str.find("Initial Franchise Fee: ")
@@ -114,11 +119,11 @@ def Term_sw(Term):# classifies the ad fee rate as strength/weakness
 # initial_sw = Initial_Fee_sw(Find_Initial_Fee(text))
 # adv_sw = Adv_Fee_rate_sw(Find_Adv_Fee_rate(text))
 # term_sw = Term_sw(Find_Term(text))
-def s_compiler(invoice_sw1, initial_sw1, adv_sw1, term_sw1):
+def s_compiler(initial_sw1, adv_sw1, term_sw1):
    
    Strengths = [] 
-   if "Strength" in invoice_sw1.keys():
-      Strengths.append(invoice_sw1)
+  #  if "Strength" in invoice_sw1.keys():
+      # Strengths.append(invoice_sw1)
    if "Strength" in initial_sw1.keys():
       Strengths.append(initial_sw1)
    if "Strength" in adv_sw1.keys():
@@ -128,11 +133,11 @@ def s_compiler(invoice_sw1, initial_sw1, adv_sw1, term_sw1):
   #  if "Strength" in train_fee_sw1.keys():
   #     Strengths.append(train_fee_sw1)
    return Strengths 
-def w_compiler(invoice_sw1, initial_sw1, adv_sw1, term_sw1):
+def w_compiler(initial_sw1, adv_sw1, term_sw1):
    
    Weaknesses = [] 
-   if "Weakness" in invoice_sw1.keys():
-      Weaknesses.append(invoice_sw1)
+  #  if "Weakness" in invoice_sw1.keys():
+  #     Weaknesses.append(invoice_sw1)
    if "Weakness" in initial_sw1.keys():
       Weaknesses.append(initial_sw1)
    if "Weakness" in adv_sw1.keys():
@@ -260,13 +265,13 @@ def call():
 #final_summary_string = ''#empty string for concatenation
         sorted_string= formater(final_summary_dict)
         sorted_string = sorted_string.split(sep='\n')
-        invoice_sw = invoice_interest_sw(find_interest_rate(text))
+        # invoice_sw = invoice_interest_sw(find_interest_rate(text))
         initial_sw = Initial_Fee_sw(Find_Initial_Fee(text))
         adv_sw = Adv_Fee_rate_sw(Find_Adv_Fee_rate(text))
         term_sw = Term_sw(Find_Term(text))
         # train_sw = train_fee_sw(text)
-        Strength = s_compiler(invoice_sw, initial_sw, adv_sw, term_sw)
-        Weakness = w_compiler(invoice_sw, initial_sw, adv_sw, term_sw)
+        Strength = s_compiler( initial_sw, adv_sw, term_sw)
+        Weakness = w_compiler( initial_sw, adv_sw, term_sw)
         strength_percentage = (len(Strength)/(len(Strength) +  len(Weakness))) * 100
         weakness_percentage= (len(Weakness)/(len(Strength) +  len(Weakness))) * 100
         additional_sections = pdf_comparator(text)[0]
