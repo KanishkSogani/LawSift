@@ -1,4 +1,5 @@
 import mongoose, { Aggregate, Schema } from "mongoose";
+<<<<<<< HEAD
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const userDataSchema = new Schema(
@@ -26,3 +27,30 @@ const userDataSchema = new Schema(
 userDataSchema.plugin(mongooseAggregatePaginate);
 
 export const UserData = mongoose.model("UserData", userDataSchema, "userdatas");
+=======
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2"
+
+const userDataSchema = new Schema({
+    summary : {
+        type: String
+    },
+    strength : {
+        type : String
+    },
+    weakness : {
+        type : String
+    },
+    percent : {
+        type :String
+    },
+    owner : {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }
+
+},{timestamps: true})
+
+userDataSchema.plugin(mongooseAggregatePaginate)
+
+export const UserData = mongoose.model('UserData', userDataSchema, 'userdatas')
+>>>>>>> 3272427ebe3c0774b6dfc054fc77798bd8f8ec42

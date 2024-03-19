@@ -2,9 +2,21 @@ import { Card } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
+import { useState, useEffect } from "react";
+import { Chart as ChartJS } from "chart.js/auto";
+import { Doughnut } from "react-chartjs-2";
 
 function Dashboard({ data }) {
   const [summary, setSummary] = useState([]);
+  const [strpr, setStrpr] = useState();
+  const [weakpr, setWeakpr] = useState();
+  useEffect(() => {
+    if (data.length > 0) {
+      setSummary(data[0].summary);
+      setStrpr(data[3].Strength_Percentage);
+      setWeakpr(data[4].weakness_percentage);
+    }
+  }, [data]);
   const [strpr, setStrpr] = useState();
   const [weakpr, setWeakpr] = useState();
   useEffect(() => {
@@ -20,9 +32,12 @@ function Dashboard({ data }) {
         style={{
           marginLeft: "8vw",
           marginTop: "9rem",
+          marginLeft: "8vw",
+          marginTop: "9rem",
           color: "white",
         }}
       >
+        <h1 style={{ fontFamily: "Plus Jakarta Sans" }}>Summary</h1>
         <h1 style={{ fontFamily: "Plus Jakarta Sans" }}>Summary</h1>
       </div>
       <div
