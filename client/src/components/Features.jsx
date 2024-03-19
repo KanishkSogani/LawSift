@@ -78,10 +78,11 @@ function Features() {
           >
             <h3 style={{ textAlign: "center" }}>Document Analysis</h3>
             <p style={{ textAlign: "center", marginTop: "1rem" }}>
-              Utilize our advanced AI technology to analyze contracts and legal
-              documents, identifying potential risks with precision. Gain
-              invaluable insights to make confident decisions, ensuring clarity
-              and mitigating potential issues before they arise.
+              Utilize advanced AI technology to carefully examine contracts and
+              legal documents, identifying potential risks and pitfalls with
+              remarkable precision. Gain crucial insights for confident
+              decision-making in critical situations. With this powerful tool,
+              navigate business dealings with clarity and assurance.
             </p>
           </div>
         </Card>

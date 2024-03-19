@@ -3,6 +3,7 @@ import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { AiFillFileImage } from "react-icons/ai";
 import { Card, Button } from "@mui/material";
 import uploadAnimation from "../assets/uploadAnimation.json";
+import lineAnimation from "../assets/lineAnimation.json";
 import Lottie from "lottie-react";
 
 function Uploadpdf() {
@@ -153,6 +154,7 @@ function Uploadpdf() {
           </div>
         </div>
       </div>
+      <Lottie animationData={lineAnimation} />
     </>
   );
 }
