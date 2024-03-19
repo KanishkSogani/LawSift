@@ -56,6 +56,7 @@ function Features() {
         }}
       >
         <Card
+          className="feature-card"
           variant="outlined"
           style={{
             backgroundColor: "#171C31",
@@ -92,6 +93,7 @@ function Features() {
         </Card>
 
         <Card
+          className="feature-card"
           variant="outlined"
           style={{
             backgroundColor: "#171C31",

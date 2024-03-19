@@ -45,8 +45,8 @@ function Uploadpdf() {
             fontSize: "18px",
           }}
         >
-          Upload your PDF file here and get the summary of the document in a few
-          seconds!
+          Upload your PDF file here and get the summary of the document in a
+          short time!
         </p>
       </div>
       <div>
