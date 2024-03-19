@@ -2,6 +2,8 @@ import { Card } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
+import Lottie from "lottie-react";
+import loadingAnimation from "../assets/loadingAnimation.json";
 
 function Dashboard({ data }) {
   const [summary, setSummary] = useState([]);
@@ -9,6 +11,7 @@ function Dashboard({ data }) {
   const [weakpr, setWeakpr] = useState();
   const [pro, setPro] = useState([]);
   const [con, setCon] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (data.length > 0) {
@@ -17,8 +20,26 @@ function Dashboard({ data }) {
       setWeakpr(data[4].weakness_percentage);
       setPro(data[5].additional_sections);
       setCon(data[6].missing_sections);
+      setIsLoading(false);
     }
   }, [data]);
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          top: "40vh",
+        }}
+      >
+        <Lottie style={{ width: 200 }} animationData={loadingAnimation} />
+      </div>
+    );
+  }
+
   return (
     <>
       <div
@@ -110,6 +131,7 @@ function Dashboard({ data }) {
           display: "flex",
           justifyContent: "space-between",
           marginRight: "8vw",
+          marginBottom: "5vh",
         }}
       >
         <div>
@@ -139,7 +161,7 @@ function Dashboard({ data }) {
             >
               PROS:
             </h2>
-            <ul style={{ listStyleType : "disc"}}>
+            <ul style={{ listStyleType: "disc" }}>
               {pro.map((item) => (
                 <li>{`\u2022 ${item}`}</li>
               ))}
@@ -173,7 +195,7 @@ function Dashboard({ data }) {
             >
               CONS:
             </h2>
-            <ul style={{listStyleType : 'disc'}}>
+            <ul style={{ listStyleType: "disc" }}>
               {con.map((item) => (
                 <li>{`\u2022 ${item}`}</li>
               ))}
