@@ -7,7 +7,7 @@ import Try from "./components/Try";
 
 import { useState } from "react";
 function App() {
-  const [image, setImage] = useState(null);
+  const [data, setData] = useState([]);
   return (
     <div>
       <Router>
@@ -16,14 +16,13 @@ function App() {
           <Route
             className="bg"
             path="/"
-            element={<LandingPage image={image} setImage={setImage} />}
+            element={<LandingPage setData={setData} />}
           />
           <Route
             className="bg"
             path="/Dashboard"
-            element={<Dashboard image={image} setImage={setImage} />}
+            element={<Dashboard data={data} />}
           />
-          <Route className="bg" path="/try" element={<Try />} />
         </Routes>
       </Router>
     </div>

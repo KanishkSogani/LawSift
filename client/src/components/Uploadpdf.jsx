@@ -8,7 +8,7 @@ import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Uploadpdf({ image, setImage }) {
+function Uploadpdf({ setData }) {
   const [selectedFile, setSelectedFile] = useState(null);
 
   // Function to handle file selection
@@ -39,6 +39,7 @@ function Uploadpdf({ image, setImage }) {
         }
       );
       console.log("File uploaded successfully:", response.data);
+      setData(response.data.data);
     } catch (error) {
       console.error("Error uploading file:", error.response.data);
     }
@@ -131,7 +132,12 @@ function Uploadpdf({ image, setImage }) {
               <div>
                 <form
                   onSubmit={handleSubmit}
-                  //   onClick={() => document.querySelector(".input-field").click()}
+                  onClick={(event) => {
+                    // Check if the event target is not the button
+                    if (!event.target.closest("button")) {
+                      document.querySelector(".input-field").click();
+                    }
+                  }}
                 >
                   <input
                     type="file"
@@ -172,12 +178,20 @@ function Uploadpdf({ image, setImage }) {
                   )}
                   <Button
                     type="submit"
-                    style={{ marginTop: "1rem" }}
+                    style={{
+                      marginTop: "1rem",
+                      position: "relative",
+                      top: "9.8rem",
+                      left: "9rem",
+                    }}
                     variant="contained"
+                    onClick={() => {
+                      !selectedFile
+                        ? alert("Please select a file!")
+                        : navigate("/Dashboard");
+                    }}
                     // onClick={() => {
-                    //   !image
-                    //     ? alert("Please select a file!")
-                    //     : navigate("/Dashboard");
+                    //   handleSubmit();
                     // }}
                   >
                     Submit Pdf
@@ -199,7 +213,7 @@ function Uploadpdf({ image, setImage }) {
                   </span>
                 </section>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button
+                  {/* <Button
                     type="submit"
                     style={{ marginTop: "1rem" }}
                     variant="contained"
@@ -208,9 +222,12 @@ function Uploadpdf({ image, setImage }) {
                     //     ? alert("Please select a file!")
                     //     : navigate("/Dashboard");
                     // }}
+                    // onClick={() => {
+                    //   handleSubmit();
+                    // }}
                   >
                     Submit Pdf
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </Card>
