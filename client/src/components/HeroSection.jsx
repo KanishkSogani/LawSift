@@ -51,12 +51,8 @@ function HeroSection() {
             </button>
           </div>
         </div>
-        <div style={{ marginRight: "8vw", marginLeft: "8vw" }}>
-          <img
-            style={{ height: 500 }}
-            src="./contract.svg"
-            alt="landing page"
-          />
+        <div style={{ marginRight: "8vw" }}>
+          <img style={{ height: 500 }} src="./upload1.svg" alt="landing page" />
         </div>
       </div>
       <Lottie animationData={lineAnimation} />
