@@ -11,6 +11,8 @@ function Dashboard({ data }) {
   const [weakpr, setWeakpr] = useState();
   const [pro, setPro] = useState([]);
   const [con, setCon] = useState([]);
+  const [strength, setStrength] = useState([]);
+  const [weakness, setWeakness] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -20,6 +22,8 @@ function Dashboard({ data }) {
       setWeakpr(data[4].weakness_percentage);
       setPro(data[5].additional_sections);
       setCon(data[6].missing_sections);
+      setStrength(data[1].Strength);
+      setWeakness(data[2].Weakness);
       setIsLoading(false);
     }
   }, [data]);
@@ -162,8 +166,8 @@ function Dashboard({ data }) {
               PROS:
             </h2>
             <ul style={{ listStyleType: "disc" }}>
-              {pro.map((item) => (
-                <li>{`\u2022 ${item}`}</li>
+              {strength.map((item) => (
+                <li>{`\u2022 ${item.Strength}`}</li>
               ))}
             </ul>
           </Card>
@@ -196,10 +200,70 @@ function Dashboard({ data }) {
               CONS:
             </h2>
             <ul style={{ listStyleType: "disc" }}>
-              {con.map((item) => (
-                <li>{`\u2022 ${item}`}</li>
+              {weakness.map((item) => (
+                <li>{`\u2022 ${item.Weakness}`}</li>
               ))}
             </ul>
+          </Card>
+        </div>
+      </div>
+      <div>
+        <div style={{ marginLeft: "8vw", marginTop: "5vh" }}>
+          <Card
+            style={{
+              margin: 0,
+              padding: 20,
+              paddingBottom: 0,
+              width: "70vw",
+              minHeight: "30vh",
+              maxHeight: "60vh",
+              // padding: 20,
+              backgroundColor: " #CCCCFF",
+              overflowY: "auto",
+              className: "style-2",
+              border: "2px solid rgb(18, 25, 60)",
+              color: "black",
+              fontSize: "20px",
+              borderRadius: 5,
+              marginTop: "5vh",
+              display: "flex",
+              marginLeft: "100px",
+              // position : "relative"
+            }}
+          >
+            <div style={{ marginRight: "25vw" }}>
+              <h2
+                style={{
+                  fontFamily: "monospace",
+                  marginBottom: "2vh",
+                  color: "rgb(18, 25, 60)",
+                }}
+              >
+                Additional:
+              </h2>
+              <ul style={{ listStyleType: "disc" }}>
+                {pro.map((item) => (
+                  <li>{`\u2022 ${item}`}</li>
+                ))}
+              </ul>
+            </div>
+            {/* <div style={{border:"1px solid black", padding:"0", position:"relative", right:"2vw", bottom:"2vh", height: "100%", minHeight : "30vh",maxHeight:"60vh"}}></div> */}
+            <div>
+              <h2
+                style={{
+                  fontFamily: "monospace",
+                  marginBottom: "2vh",
+                  color: "rgb(18, 25, 60)",
+                }}
+              >
+                Missing:
+              </h2>
+              <ul style={{ listStyleType: "disc" }}>
+                {con.map((item) => (
+                  <li>{`\u2022 ${item}`}</li>
+                ))}
+              </ul>
+            </div>
           </Card>
         </div>
       </div>
