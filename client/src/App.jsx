@@ -3,7 +3,6 @@ import "./App.css";
 import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
-import Try from "./components/Try";
 
 import { useState } from "react";
 function App() {
