@@ -17,7 +17,7 @@ Our Legal Document Analysis and Summarization Tool is an innovative solution des
 
 **Feedback Loop:** Incorporating a feedback loop mechanism, the tool improves its accuracy and efficiency over time, learning from user interactions and adjustments.
 
-## Benefits
+## Benefits :-
 
 **Time-Saving:** Lawyers can significantly reduce the time spent on manual document review, allowing them to focus on higher-value tasks such as strategy development and client interaction.
 
