@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { AiFillFileImage } from "react-icons/ai";
 import { Card, Button } from "@mui/material";
@@ -8,6 +7,8 @@ import lineAnimation from "../assets/lineAnimation.json";
 import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toastwrapper } from "../utils/toastwrapper";
+import toast, { Toaster } from "react-hot-toast";
 
 function Uploadpdf({ setData }) {
   const navigate = useNavigate();
@@ -20,33 +21,33 @@ function Uploadpdf({ setData }) {
   };
 
   // Function to handle form submission
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    navigate("/Dashboard");
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   navigate("/Dashboard");
 
-    if (!selectedFile) {
-      return alert("Please select a PDF file");
-    }
+  //   if (!selectedFile) {
+  //     return alert("Please select a PDF file");
+  //   }
 
-    const formData = new FormData();
-    formData.append("pdf", selectedFile);
+  //   const formData = new FormData();
+  //   formData.append("pdf", selectedFile);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/analysis/summary",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log("File uploaded successfully:", response.data);
-      setData(response.data.data);
-    } catch (error) {
-      console.error("Error uploading file:", error.response.data);
-    }
-  };
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:3000/analysis/summary",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //     console.log("File uploaded successfully:", response.data);
+  //     setData(response.data.data);
+  //   } catch (error) {
+  //     console.error("Error uploading file:", error.response.data);
+  //   }
+  // };
 
   const [fileName, setFileName] = useState("No selected file");
   return (
@@ -134,7 +135,7 @@ function Uploadpdf({ setData }) {
               </div>
               <div>
                 <form
-                  onSubmit={handleSubmit}
+                  // onSubmit={handleSubmit}
                   onClick={(event) => {
                     // Check if the event target is not the button
                     if (!event.target.closest("button")) {
@@ -179,7 +180,7 @@ function Uploadpdf({ setData }) {
                       </p>
                     </>
                   )}
-                  <Button
+                  {/* <Button
                     type="submit"
                     style={{
                       marginTop: "1rem",
@@ -193,12 +194,12 @@ function Uploadpdf({ setData }) {
                     //     ? alert("Please select a file!")
                     //     : navigate("/Dashboard");
                     // }}
-                    // onClick={() => {
-                    //   handleSubmit();
-                    // }}
+                    onClick={() => {
+                      notify;
+                    }}
                   >
                     Submit Pdf
-                  </Button>
+                  </Button> */}
                 </form>
 
                 <section className="uploaded-row">
@@ -216,10 +217,11 @@ function Uploadpdf({ setData }) {
                   </span>
                 </section>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  {/* <Button
+                  <Button
                     type="submit"
                     style={{ marginTop: "1rem" }}
                     variant="contained"
+                    onClick={toastwrapper}
                     // onClick={() => {
                     //   !image
                     //     ? alert("Please select a file!")
@@ -230,7 +232,7 @@ function Uploadpdf({ setData }) {
                     // }}
                   >
                     Submit Pdf
-                  </Button> */}
+                  </Button>
                 </div>
               </div>
             </Card>
@@ -238,6 +240,7 @@ function Uploadpdf({ setData }) {
         </div>
       </div>
       <Lottie animationData={lineAnimation} />
+      <Toaster />
     </>
   );
 }
