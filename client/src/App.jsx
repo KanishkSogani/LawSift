@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import LandingPage from "./pages/LandingPage";
-import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 
 import { useState } from "react";
@@ -10,7 +9,6 @@ function App() {
   return (
     <div>
       <Router>
-        <Navbar />
         <Routes>
           <Route
             className="bg"

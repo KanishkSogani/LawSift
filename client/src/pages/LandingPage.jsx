@@ -3,10 +3,12 @@ import Features from "../components/Features";
 import Uploadpdf from "../components/Uploadpdf";
 import About from "../components/About";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 function LandingPage({ setData }) {
   return (
     <>
+      <Navbar />
       <HeroSection />
       <Features />
       <Uploadpdf setData={setData} />
