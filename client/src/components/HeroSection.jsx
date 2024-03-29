@@ -19,7 +19,7 @@ function HeroSection() {
         <div>
           <h1 style={{ wordSpacing: ".7rem" }}>
             {" "}
-            <span>Your Personal AI Assistant For</span>{" "}
+            <span>Your Personal AI Assistant for</span>{" "}
             <div style={{ content: "transparency", color: "#6E58F2" }}>
               <ReactTyped
                 className="text-primary"
@@ -44,15 +44,19 @@ function HeroSection() {
                 const element = document.getElementById("upload");
                 element.scrollIntoView({ behavior: "smooth" });
               }}
-              className="btn"
-              style={{ marginTop: "2.5rem" }}
+              className="btn mt-[2.5rem]"
+              // style={{ marginTop: "2.5rem" }}
             >
               Get Started
             </button>
           </div>
         </div>
         <div style={{ marginRight: "8vw" }}>
-          <img style={{ height: 500 }} src="./upload1.svg" alt="landing page" />
+          <img
+            className="min-w-[30vw] mb-[5vh]"
+            src="./upload1.svg"
+            alt="landing page"
+          />
         </div>
       </div>
       <Lottie animationData={lineAnimation} />

@@ -25,7 +25,7 @@ function Footer() {
           textAlign: "center",
         }}
       >
-        {`Made with ❤️ by Kanishk.`}
+        {`Footer Here`}
       </p>
       {/* <button
         onClick={async () => {
