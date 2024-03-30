@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 function Footer() {
   return (
     <footer style={{ backgroundColor: "#0E1525", paddingTop: "4rem" }}>

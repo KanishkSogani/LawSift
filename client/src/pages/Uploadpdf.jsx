@@ -11,7 +11,10 @@ import axios from "axios";
 import { toastwrapper } from "../utils/toastwrapper";
 import toast, { Toaster } from "react-hot-toast";
 
+import { useParams } from "react-router-dom";
+
 function Uploadpdf({ setData }) {
+  const { docID } = useParams();
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
 

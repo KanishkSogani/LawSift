@@ -12,7 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage setData={setData} />} />
           <Route path="/Dashboard" element={<Dashboard data={data} />} />
-          <Route path="/upload" element={<Uploadpdf data={data} />} />
+          <Route path="/upload/:docID" element={<Uploadpdf data={data} />} />
         </Routes>
       </Router>
     </div>

@@ -1,8 +1,11 @@
 import { ReactTyped } from "react-typed";
 import lineAnimation from "../assets/lineAnimation.json";
 import Lottie from "lottie-react";
+import { useNavigate } from "react-router-dom";
 
 function HeroSection() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div
@@ -41,11 +44,14 @@ function HeroSection() {
           <div>
             <button
               onClick={() => {
-                const element = document.getElementById("upload");
+                const element = document.getElementById("select");
                 element.scrollIntoView({ behavior: "smooth" });
               }}
               className="btn mt-[2.5rem]"
               // style={{ marginTop: "2.5rem" }}
+              // onClick={() => {
+              //   navigate("/upload");
+              // }}
             >
               Get Started
             </button>
