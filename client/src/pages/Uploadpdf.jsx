@@ -8,16 +8,46 @@ import lineAnimation from "../assets/lineAnimation.json";
 import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toastwrapper } from "../utils/toastwrapper";
-import toast, { Toaster } from "react-hot-toast";
-
 import { useParams } from "react-router-dom";
+// import { Document, Page, pdfjs } from "react-pdf";
 
 function Uploadpdf({ setData }) {
+  // pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+  // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  //   "pdfjs-dist/build/pdf.worker.min.js",
+  //   import.meta.url
+  // ).toString();
+
   const { docID } = useParams();
+  const [fileName, setFileName] = useState("No selected file");
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
+  // const [pdfData, setPdfData] = useState(null);
+  // const [numPages, setNumPages] = useState(null);
+  // const [pageNumber, setPageNumber] = useState(1);
 
+  // const onFileLoad = (event) => {
+  //   const file = event.target.files[0];
+  //   setFileName(event.target.files[0].name);
+  //   const reader = new FileReader();
+
+  // reader.onload = async (e) => {
+  //   const pdfData = e.target.result;
+  //   setPdfData(pdfData);
+  // };
+
+  //   reader.onload = (e) => {
+  //     setPdfData(e.target.result);
+  //   };
+
+  //   reader.readAsDataURL(file);
+  //   setSelectedFile(file);
+  //   console.log("Success");
+  // };
+
+  // const onDocumentLoadSuccess = ({ numPages }) => {
+  //   setNumPages(numPages);
+  // };
   // Function to handle file selection
   const handleFileInputChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -33,8 +63,13 @@ function Uploadpdf({ setData }) {
     formData.append("pdf", selectedFile);
 
     try {
+      const queryParams = {
+        id_px: "1",
+      };
       const response = await axios.post(
-        "http://localhost:3000/analysis/summary",
+        "https://lawsift.onrender.com/analysis/summary" +
+          "?" +
+          new URLSearchParams(queryParams),
         formData,
         {
           headers: {
@@ -49,7 +84,6 @@ function Uploadpdf({ setData }) {
     }
   };
 
-  const [fileName, setFileName] = useState("No selected file");
   return (
     <>
       <div className="mt-[1.5rem]">
@@ -93,8 +127,8 @@ function Uploadpdf({ setData }) {
             fontSize: "18px",
           }}
         >
-          Upload your PDF file here and get the summary of the document in a
-          short time!
+          Transform your document analysis experience! Simply upload your PDF
+          file here and unlock the power of instant summarization.
         </p>
       </div>
       <div>
@@ -245,7 +279,17 @@ function Uploadpdf({ setData }) {
           </div>
         </div>
       </div>
-      <Toaster />
+      {/* <div>
+        {selectedFile && (
+          <Document
+            className="pdfcontainer"
+            file={pdfData}
+            onLoadSuccess={onDocumentLoadSuccess}
+          >
+            <Page pageNumber={pageNumber} />
+          </Document>
+        )}
+      </div> */}
     </>
   );
 }

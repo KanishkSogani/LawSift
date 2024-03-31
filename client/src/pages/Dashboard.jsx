@@ -1,273 +1,220 @@
-import { Card } from "@mui/material";
-import { useState, useEffect } from "react";
-import { Chart as ChartJS } from "chart.js/auto";
-import { Doughnut } from "react-chartjs-2";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ReactTyped } from "react-typed";
+import { summary } from "../../../server/src/controllers/summary.controllers";
+import dashloadingAnimation from "../assets/dashloadingAnimation.json";
 import Lottie from "lottie-react";
-import loadingAnimation from "../assets/loadingAnimation.json";
+import axios from "axios";
 
 function Dashboard({ data }) {
-  const [summary, setSummary] = useState([]);
-  const [strpr, setStrpr] = useState();
-  const [weakpr, setWeakpr] = useState();
-  const [pro, setPro] = useState([]);
-  const [con, setCon] = useState([]);
-  const [strength, setStrength] = useState([]);
-  const [weakness, setWeakness] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [history, setHistory] = useState([]);
+  const [currentQuery, setCurrentQuery] = useState("");
+  const [summary, setSummary] = useState("");
+  const [keypoints, setKeypoints] = useState("");
+  const [restrictions, setRestrictions] = useState("");
+  const [terms, setTerms] = useState("");
+  const [license, setLicensee] = useState("");
+  const [ans, setAns] = useState([]);
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    setCurrentQuery(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    const ans = await axios.post("https://lawsift.onrender.com/query", {
+      query: currentQuery,
+    });
+    if (ans.data.data) {
+      const responseData = ans.data.data;
+      console.log(responseData);
+      setAns((prevState) => [...prevState, responseData]);
+    } else {
+      setAns((prevState) => [
+        ...prevState,
+        "Sorry, Please enter a valid query.",
+      ]);
+    }
+
+    if (currentQuery.trim() !== "") {
+      // Add the current query to the history
+      setHistory([...history, currentQuery]);
+
+      // Clear the current query
+      setCurrentQuery("");
+    }
+    if (!currentQuery) {
+      alert("Please type a message!");
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
+  // Maximum number of queries to keep in history
+  const maxHistoryLength = 10;
+
+  // if (!data) {
+  //   return <h1 style={{ color: "white" }}>Loading...</h1>;
+  // }
 
   useEffect(() => {
-    if (data.length > 0) {
-      setSummary(data[0].summary);
-      setStrpr(data[3].Strength_Percentage);
-      setWeakpr(data[4].weakness_percentage);
-      setPro(data[5].additional_sections);
-      setCon(data[6].missing_sections);
-      setStrength(data[1].Strength);
-      setWeakness(data[2].Weakness);
-      setIsLoading(false);
+    if (data) {
+      console.log(terms);
+      setSummary(data.message);
+      setKeypoints(data.response_1);
+      setRestrictions(data.response_2);
+      setTerms(data.response_3);
+      setLicensee(data.response_4);
     }
   }, [data]);
 
-  if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-          top: "40vh",
-        }}
-      >
-        <Lottie style={{ width: 200 }} animationData={loadingAnimation} />
-      </div>
-    );
-  }
-
   return (
-    <>
+    <div className="chat-container" style={{ backgroundColor: "#202021" }}>
       <div
+        className="side-panel"
         style={{
-          marginLeft: "8vw",
-          marginTop: "9rem",
           color: "white",
+          backgroundColor: "#171717",
+          fontFamily: "DM Sans",
         }}
       >
-        <h1 style={{ fontFamily: "Plus Jakarta Sans" }}>Summary</h1>
-      </div>
-      <div
-        style={{
-          marginLeft: "8vw",
-          marginTop: "1.5rem",
-          marginRight: "8vw",
-          display: "flex",
-        }}
-      >
-        <div>
-          <Card
+        <div
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <h1
             style={{
-              margin: 0,
-              width: "60vw",
-              minHeight: "60vh",
-              maxHeight: "60vh",
-              // padding: 20,
-              backgroundColor: " #CCCCFF",
-              overflowY: "auto",
-              className: "style-2",
-              border: "2px solid #6E58F2",
-              marginRight: "2vw",
-              color: "black",
-              fontSize: "20px",
-              borderRadius: 5,
+              fontSize: "1.5rem",
+              marginBottom: "2rem",
+              cursor: "pointer",
             }}
           >
-            {summary.map((item) => (
-              <p
-                style={
-                  item === ""
-                    ? null
-                    : { border: "1px solid black", padding: ".5rem" }
-                }
-              >
-                {item}
-              </p>
-            ))}
-          </Card>
+            Lawsift
+          </h1>
         </div>
-        <div>
-          <h2 style={{ color: "white", marginTop: "5vh" }}>Chart</h2>
-          <Card
-            // className="feature-card"
-            variant="outlined"
-            style={{
-              backgroundColor: "#171C31",
-              width: "25vw",
-              height: "50vh",
-              padding: 20,
-              color: "white",
-              borderRadius: 20,
-              border: "2px solid #6E58F2",
-              marginTop: ".8vh",
-            }}
-          >
-            <Doughnut
-              data={{
-                labels: ["Strength", "Weakness"],
-                datasets: [
-                  {
-                    data: [strpr, weakpr],
-                    backgroundColor: [
-                      "rgb(207, 159, 255)",
-                      "rgb(218, 112, 214)",
-                    ],
-                    hoverOffset: 4,
-                  },
-                ],
-              }}
+        <h2
+          className="color"
+          style={{ fontSize: "1rem", fontWeight: "700", color: "gray" }}
+        >
+          History
+        </h2>
+        <ul>
+          {history.slice(-maxHistoryLength).map((query, index) => (
+            <li key={index}>{query}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="chat-window">
+        <div
+          style={{
+            marginTop: "5vh",
+            minHeight: "83vh",
+            maxHeight: "83vh",
+            minWidth: "56vw",
+            overflowY: "auto",
+            marginLeft: "10vw",
+            paddingRight: "15vw",
+          }}
+        >
+          <p className="heading">
+            <ReactTyped
+              strings={["Summary :"]}
+              typeSpeed={80}
+              backDelay={950}
+              showCursor={data ? false : true}
             />
-          </Card>
-        </div>
-      </div>
-      <div
-        style={{
-          marginTop: "10vh",
-          marginLeft: "8vw",
-          display: "flex",
-          justifyContent: "space-between",
-          marginRight: "8vw",
-          marginBottom: "5vh",
-        }}
-      >
-        <div>
-          <Card
-            style={{
-              margin: 0,
-              padding: 20,
-              width: "38vw",
-              minHeight: "30vh",
-              maxHeight: "60vh",
-              // padding: 20,
-              backgroundColor: " #CCCCFF",
-              overflowY: "auto",
-              className: "style-2",
-              border: "2px solid green",
-              color: "black",
-              fontSize: "20px",
-              borderRadius: 5,
-            }}
-          >
-            <h2
+          </p>
+          <p className="answer"> {summary}</p>
+          {!data && (
+            <Lottie
               style={{
-                fontFamily: "monospace",
-                marginBottom: "2vh",
-                color: "#008631",
+                height: "100px",
+                position: "relative",
+                top: "20vh",
+                left: "8vw",
               }}
-            >
-              PROS:
-            </h2>
-            <ul style={{ listStyleType: "disc" }}>
-              {strength.map((item) => (
-                <li>{`\u2022 ${item.Strength}`}</li>
+              animationData={dashloadingAnimation}
+            />
+          )}
+          {data && (
+            <>
+              <p className="heading">
+                <ReactTyped
+                  strings={["Key Points :"]}
+                  typeSpeed={80}
+                  backDelay={950}
+                  showCursor={false}
+                />
+              </p>
+              <p className="answer"> {keypoints}</p>
+              <p className="heading">
+                <ReactTyped
+                  strings={["Restrictions :"]}
+                  typeSpeed={80}
+                  backDelay={950}
+                  showCursor={false}
+                />
+              </p>
+              <p className="answer"> {restrictions}</p>
+              <p className="heading">
+                <ReactTyped
+                  strings={["Terms :"]}
+                  typeSpeed={80}
+                  backDelay={950}
+                  showCursor={false}
+                />
+              </p>
+              <p className="answer"> {terms}</p>
+              <p className="heading">
+                <ReactTyped
+                  strings={["License :"]}
+                  typeSpeed={80}
+                  backDelay={950}
+                  showCursor={false}
+                />
+              </p>
+              <p className="answer">{license}</p>
+              <p style={{ fontSize: "1.2rem" }} className="answer">
+                Please enter your queries!
+              </p>
+              {ans.map((item) => (
+                <p className="answer">{item}</p>
               ))}
-            </ul>
-          </Card>
+              ;
+            </>
+          )}
         </div>
-        <div style={{ marginLeft: "11vw" }}>
-          <Card
-            style={{
-              margin: 0,
-              padding: 20,
-              width: "38vw",
-              minHeight: "30vh",
-              maxHeight: "60vh",
-              // padding: 20,
-              backgroundColor: " #CCCCFF",
-              overflowY: "auto",
-              className: "style-2",
-              border: "2px solid red",
-              color: "black",
-              fontSize: "20px",
-              borderRadius: 5,
-            }}
-          >
-            <h2
+        <div className="input-container">
+          <input
+            type="text"
+            placeholder="Type your message..."
+            value={currentQuery}
+            onChange={handleInputChange}
+            onKeyPress={handleKeyPress}
+          />
+
+          <button onClick={handleSubmit}>
+            <ion-icon
+              className="icon"
               style={{
-                fontFamily: "monospace",
-                marginBottom: "2vh",
-                color: "red",
+                display: "block",
+                color: "white",
+                fontSize: "24px",
+                position: "relative",
+                right: "3vw",
               }}
-            >
-              CONS:
-            </h2>
-            <ul style={{ listStyleType: "disc" }}>
-              {weakness.map((item) => (
-                <li>{`\u2022 ${item.Weakness}`}</li>
-              ))}
-            </ul>
-          </Card>
+              name="send-outline"
+            ></ion-icon>
+          </button>
         </div>
       </div>
-      <div>
-        <div style={{ marginLeft: "8vw", marginTop: "5vh" }}>
-          <Card
-            style={{
-              margin: 0,
-              padding: 20,
-              paddingBottom: 0,
-              width: "70vw",
-              minHeight: "30vh",
-              maxHeight: "60vh",
-              // padding: 20,
-              backgroundColor: " #CCCCFF",
-              overflowY: "auto",
-              className: "style-2",
-              border: "2px solid rgb(18, 25, 60)",
-              color: "black",
-              fontSize: "20px",
-              borderRadius: 5,
-              marginTop: "5vh",
-              display: "flex",
-              marginLeft: "100px",
-              // position : "relative"
-            }}
-          >
-            <div style={{ marginRight: "25vw" }}>
-              <h2
-                style={{
-                  fontFamily: "monospace",
-                  marginBottom: "2vh",
-                  color: "rgb(18, 25, 60)",
-                }}
-              >
-                Additional:
-              </h2>
-              <ul style={{ listStyleType: "disc" }}>
-                {pro.map((item) => (
-                  <li>{`\u2022 ${item}`}</li>
-                ))}
-              </ul>
-            </div>
-            {/* <div style={{border:"1px solid black", padding:"0", position:"relative", right:"2vw", bottom:"2vh", height: "100%", minHeight : "30vh",maxHeight:"60vh"}}></div> */}
-            <div>
-              <h2
-                style={{
-                  fontFamily: "monospace",
-                  marginBottom: "2vh",
-                  color: "rgb(18, 25, 60)",
-                }}
-              >
-                Missing:
-              </h2>
-              <ul style={{ listStyleType: "disc" }}>
-                {con.map((item) => (
-                  <li>{`\u2022 ${item}`}</li>
-                ))}
-              </ul>
-            </div>
-          </Card>
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
 

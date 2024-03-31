@@ -24,7 +24,7 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #202021;
 }
 
 /* Handle */
@@ -159,4 +159,96 @@ form {
 .feature-card:hover {
   transform: scale(1.05);
   transition: transform 0.5s ease;
+}
+
+/* Dashboard UI */
+.chat-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Side Panel */
+.side-panel {
+  max-width: 17.5vw;
+  min-width: 17.5vw;
+  padding: 20px;
+}
+
+.side-panel h2 {
+  margin-bottom: 10px;
+}
+
+.side-panel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.side-panel ul li {
+  margin-bottom: 5px;
+}
+
+/* Chat Window */
+.chat-window {
+  width: full;
+  background-color: #202021;
+}
+
+/* Input Container */
+.input-container {
+  display: flex;
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+  width: 80vw;
+  padding-left: 10vw;
+  padding-right: 10vw;
+}
+
+/* Input Field */
+.input-container input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  margin-right: 10px;
+  background-color: #4c4c4d;
+  color: white;
+  border: 2px solid transparent;
+}
+
+/* Submit Button */
+/* .input-container button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+} */
+
+.input-container input[type="text"]:focus {
+  outline: none;
+  border: 2px solid #725ac1;
+}
+
+.heading {
+  color: white;
+  font-size: 2rem;
+  margin-top: 5vh;
+  font-weight: 500;
+}
+
+.answer {
+  color: white;
+  font-size: 1rem;
+  margin-top: 3vh;
+}
+
+.pdfcontainer {
+  min-width: "80vw";
+  min-height: "80vh";
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
