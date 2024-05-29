@@ -9,7 +9,7 @@ function Footer() {
           textAlign: "center",
         }}
       >
-        {`Footer`}
+        © 2024 LawSift. All rights reserved.
       </p>
     </footer>
   );
